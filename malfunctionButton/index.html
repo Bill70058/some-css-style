@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <title>赛博朋克2077 故障风按钮</title>
+  <!-- 参考文档 -->
+  <!-- <a href="https://mp.weixin.qq.com/s/zf6cIjlDFhg_2qH6hQghNg"></a> -->
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #F8F005;
+    }
+
+    button, button::after {
+      width: 380px;
+      height: 86px;
+      font-size: 36px;
+      font-family: 'Bebas Neue', cursive;
+      /* 左下角缺口效果 */
+      background: linear-gradient(45deg, transparent 5%, #FF013c 5%);
+      border: 0;
+      color: #fff;
+      letter-spacing: 3px;
+      line-height: 88px;
+      box-shadow: 6px 0px 0px #00E6F6;
+      outline: transparent;
+      position: relative;
+    }
+
+    /* 做一个一模一样的按钮作为遮罩层 */
+    button::after {
+      /* 将切片存进css变量中 */
+      /**
+      * 处理图形分割的部份，加入 clip-path，套用 inset()，
+      * 里面的设定值有 4 个，分别代表上右下左，即是要向内缩小多少的意思。
+      * 先设定为 80% \-6px 0 0，右边设定为 -6px 的原因是，
+      * 右边有一个亮蓝色的边框，由于它不计算在容器的范围内，所以要将右边设定为负数
+      **/
+      --slice-0: inset(50% 50% 50% 50%);
+      --slice-1: inset(80% -6px 0 0);
+      --slice-2: inset(50% -6px 30% 0);
+      --slice-3: inset(10% -6px 85% 0);
+      --slice-4: inset(40% -6px 43% 0);
+      --slice-5: inset(80% -6px 5% 0);
+
+      content: 'AVAILABLE NOW';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6f6 5%, #ff013c 5%);
+      /* 主要的字体错位 */
+      text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+
+      /* 切片+移动造成闪烁的动画效果 */
+      /* clip-path: inset(80% -6px 0 0); */
+      /* transform: translate(-20px, 10px); */
+      clip-path: var(--slice-0);
+    }
+
+    /* 鼠标悬浮动画效果 */
+    button:hover::after {
+      animation: 1s steps(2, end) glitch;
+    }
+
+    /**
+    * 最后，制作动画的部份，新增 @keyframes glitch 定义一个动画名为 glitch，
+    * 这里我分为 11 个部份，0%，10%，20%，如此类推，一直至到 100%。
+    * 然后在每一个部份都设置 clip-path() 和 transform()，clip-path() 
+    * 就随机套用一个切片，而 transform() 就定义一些随机值，稍为移动一下就可以了
+    **/
+    @keyframes glitch {
+    0% {
+      clip-path: var(--slice-1);
+      transform: translate(-20px, -10px);
+    }
+    
+    10% {
+      clip-path: var(--slice-3);
+      transform: translate(10px, 10px);
+    }
+    
+    20% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 10px);
+    }
+    
+    30% {
+      clip-path: var(--slice-3);
+      transform: translate(0px, 5px);
+    }
+    
+    40% {
+      clip-path: var(--slice-2);
+      transform: translate(-5px, 0px);
+    }
+    
+    50% {
+      clip-path: var(--slice-3);
+      transform: translate(5px, 0px);
+    }
+    
+    60% {
+      clip-path: var(--slice-4);
+      transform: translate(5px, 10px);
+    }
+    
+    70% {
+      clip-path: var(--slice-2);
+      transform: translate(-10px, 10px);
+    }
+    
+    80% {
+      clip-path: var(--slice-5);
+      transform: translate(20px, -10px);
+    }
+    
+    90% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 0px);
+    }
+    
+    100% {
+      clip-path: var(--slice-1);
+      transform: translate(0);
+    }
+  }
+  </style>
+</head>
+<body>
+  <button>AVAILABLE NOW</button>
+</body>
+</html>
